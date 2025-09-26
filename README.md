@@ -1,5 +1,7 @@
 # Multi-Tenant Property Bill Management System
 
+[![Watch the video](https://raw.githubusercontent.com/jahid012/flat_and_bill_management_system/master/preview.jpg)](https://drive.google.com/file/d/1mI9yIEMRHBUkZHHMoky5wEdVKMAsA9LY/view?usp=sharing)
+
 
 ### Multi-Tenancy Implementation
 This system uses a **column-based multi-tenancy approach** instead of database-level or domain-based separation.
