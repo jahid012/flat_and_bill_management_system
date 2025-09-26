@@ -1,24 +1,12 @@
 # Multi-Tenant Property Bill Management System
 
-A comprehensive Laravel 11 application for managing property billing across multiple house owners with dual authentication guards and column-based multi-tenancy.
-
-## Architecture Overview
 
 ### Multi-Tenancy Implementation
-This system implements **column-based multi-tenancy** rather than traditional database or domain-based tenancy:
+This system uses a **column-based multi-tenancy approach** instead of database-level or domain-based separation.
 
-- **Tenant Isolation**: Uses `house_owner_id` for data segregation across all tenant-scoped models
-- **TenantScoped Trait**: Automatically filters queries by authenticated house owner
-- **Global Scopes**: Ensures data isolation without manual filtering
-- **Stancl/Tenancy Package**: Installed but intentionally disabled (see `bootstrap/providers.php`)
-
-### Authentication Guards
-Three separate authentication contexts:
-```php
-'admin'       // System administrators - full access
-'house_owner' // Property managers - tenant-scoped access  
-'web'         // Standard users (currently unused)
-```
+- **Tenant Isolation**: Data is segregated by `house_owner_id` across all tenant-related models.  
+- **TenantScoped Trait**: Ensures queries are automatically filtered for the authenticated house owner.  
+- **Global Scopes**: Enforces data isolation consistently, removing the need for manual filtering.
 
 
 ## Local Development Setup
@@ -33,14 +21,13 @@ Three separate authentication contexts:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/jahid012/multi-tenant-blogging-platform.git
-   cd multi-tenant-blogging-platform
+   git clone https://github.com/jahid012/flat_and_bill_management_system.git
+   cd flat_and_bill_management_system
    ```
 
 2. **Install Dependencies**
    ```bash
    composer install
-   npm install
    ```
 
 3. **Environment Configuration**
@@ -80,12 +67,12 @@ Three separate authentication contexts:
 ### Default Login Credentials
 
 **System Administrator:**
-- URL: `/admin/login`
+- URL: `http://127.0.0.1:8000/admin/login`
 - Email: `admin@gmail.com`
 - Password: `123456`
 
 **House Owner (Test Account):**
-- URL: `/house-owner/login`
+- URL: `http://127.0.0.1:8000/house-owner/login`
 - Email: `owner@gmail.com`
 - Password: `123456`
 
@@ -107,10 +94,9 @@ class Building extends Model {
 
 #### 2. Route Structure
 ```php
-// Admin routes: full system access
+
 Route::prefix('admin')->middleware(['role:admin'])
 
-// House owner routes: tenant-scoped access
 Route::prefix('house-owner')->middleware(['role:house_owner'])
 ```
 
@@ -121,14 +107,14 @@ BillCreated → SendBillCreatedNotification → BillCreatedNotification (Queued)
 BillPaid → SendBillPaidNotification → BillPaidNotification (Queued)
 ```
 
-#### 4. Queue-Based Jobs
-- `ProcessOverdueBills` - Updates bill status and sends notifications
-- All email notifications implement `ShouldQueue` for performance
+#### 4. Queue Jobs
+- `ProcessOverdueBills` - Updates overdue bill statuses and sends alerts
+- All notifications implement `ShouldQueue` for better performance
 
 ### Database Optimizations
 
 #### Indexes
-Strategic indexing for multi-tenant queries:
+Indexes have been added to improve multi-tenant queries:
 ```php
 // Buildings table
 $table->index(['house_owner_id', 'is_active']);
@@ -143,62 +129,62 @@ $table->unique(['flat_id', 'bill_category_id', 'bill_month']);
 ```
 
 #### Query Performance
-- **Global Scopes**: Automatic tenant filtering at model level
-- **Eager Loading**: Relationships pre-loaded to avoid N+1 queries
-- **Computed Columns**: `total_amount` stored as computed column
-- **Selective Fields**: Controllers fetch only required columns
+- **Global Scopes**: Ensures tenant filtering at the model level
+- **Eager Loading**: Avoids N+1 query issues
+- **Computed Columns**: Example → `total_amount` as a computed field
+- **Selective Fields**: Controllers only fetch the fields they need
 
 ### Security Features
 
 #### Multi-Guard Authentication
-- Separate password policies for admin and house owner accounts
-- Role-based middleware protection
-- Session isolation between guard types
+- Separate guards for admins and house owners
+- Role-based middleware for route protection
+- Session isolation between guards
 
 #### Data Protection
-- **Tenant Isolation**: Automatic filtering prevents cross-tenant data access
-- **Mass Assignment Protection**: Fillable arrays on all models
-- **CSRF Protection**: All forms protected
-- **SQL Injection Prevention**: Eloquent ORM with parameter binding
+- Automatic tenant isolation (no cross-tenant data leaks)
+- Mass assignment protection with `$fillable`
+- CSRF protection enabled
+- SQL injection prevention via Eloquent bindings
 
 ## Development Workflows
 
 ### Testing Multi-Tenancy
 ```bash
-# Test tenant data isolation
 php artisan tinker
->>> App\Models\Building::count() // Should auto-scope to authenticated user
+>>> App\Models\Building::count()
+# Should only return results for the logged-in house owner
 ```
 
 ### Database Operations
 ```bash
-# Reset with fresh sample data
+# Reset with seed data
 php artisan migrate:fresh --seed
 
-# Check queue jobs
+# Run queues with debug info
 php artisan queue:work --verbose
 ```
 
 ### Adding New Tenant-Scoped Models
-1. Add `TenantScoped` trait to model
-2. Include `house_owner_id` in fillable array
-3. Add foreign key constraint in migration
-4. Create factory with `house_owner_id` relationship
+1. Add TenantScoped trait
+2. Include `house_owner_id` in $fillable
+3. Add a foreign key in migration
+4. Update factory to `include house_owner_id`
 
 ## Performance
 
 ### Query Optimization
-- **Tenant Scoping**: All queries automatically scoped, reducing dataset size by ~80%
-- **Index Usage**: Strategic indexes on frequently queried tenant + status combinations
-- **Eager Loading**: Bills load with flat, tenant, and category relationships
-- **Pagination**: Large datasets paginated with tenant-aware queries
+- Tenant Scoping reduces dataset size by ~80%
+- Indexes improve search speed on tenant + status columns
+- Eager Loading preloads bills with flat, tenant, and category relations
+- Pagination applied for large datasets
 
 ### Caching Strategy
-- **Model Caching**: Tenant-specific cache keys prevent cross-tenant data leaks
-- **Query Caching**: Frequently accessed bill summaries cached per tenant
-- **Session Caching**: User permissions cached to avoid repeated role checks
+- Tenant-specific cache keys to avoid leaks
+- Bill summaries cached per tenant
+- Session caching for user permissions
 
 ### Background Processing
-- **Queue Workers**: Email notifications processed asynchronously
-- **Scheduled Jobs**: Overdue bill processing runs hourly
-- **Event Broadcasting**: Real-time notifications for bill updates
+- Queue Workers for async email notifications
+- Scheduled Jobs process overdue bills hourly
+- Broadcasting used for real-time bill updates
