@@ -1,6 +1,7 @@
 # Multi-Tenant Property Bill Management System
 
-[![Watch the video](https://drive.google.com/file/d/1mI9yIEMRHBUkZHHMoky5wEdVKMAsA9LY/view?usp=sharing)](https://drive.google.com/file/d/1mI9yIEMRHBUkZHHMoky5wEdVKMAsA9LY/view?usp=sharing)
+### Video Link
+[![Demo Video](preview.png)](https://drive.google.com/file/d/1mI9yIEMRHBUkZHHMoky5wEdVKMAsA9LY/view?usp=sharing)
 
 
 ### Multi-Tenancy Implementation
@@ -13,7 +14,9 @@ This system uses a **column-based multi-tenancy approach** instead of database-l
 
 ## Local Development Setup
 
-[![SQL file link](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)](https://raw.githubusercontent.com/jahid012/flat_and_bill_management_system/master/flat_and_bill_management_system.sql)
+### SQL file link
+[Download SQL File](https://raw.githubusercontent.com/jahid012/flat_and_bill_management_system/master/flat_and_bill_management_system.sql)
+
 
 ### Prerequisites
 - PHP 8.3+
