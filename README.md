@@ -13,6 +13,9 @@ This system uses a **column-based multi-tenancy approach** instead of database-l
 
 ## Local Development Setup
 
+
+[![SQL file link](https://raw.githubusercontent.com/jahid012/flat_and_bill_management_system/master/flat_and_bill_management_system.sql)]
+
 ### Prerequisites
 - PHP 8.3+
 - Composer
