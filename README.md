@@ -22,7 +22,7 @@ This system uses a **column-based multi-tenancy approach** instead of database-l
 - PHP 8.3+
 - Composer
 - MySQL 8.0+
-- XAMPP/WAMP/Laragon (recommended for Windows)
+- XAMPP/WAMP/Laragon
 
 ### Installation Steps
 
