@@ -1,6 +1,6 @@
 # Multi-Tenant Property Bill Management System
 
-### Click the Image to check the video.
+### Click the Image to see the video.
 [![Demo Video](preview.png)](https://drive.google.com/file/d/1mI9yIEMRHBUkZHHMoky5wEdVKMAsA9LY/view?usp=sharing)
 
 
