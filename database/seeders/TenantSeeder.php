@@ -40,7 +40,7 @@ class TenantSeeder extends Seeder
             $firstName = $firstNames[array_rand($firstNames)];
             $lastName = $lastNames[array_rand($lastNames)];
             $fullName = $firstName . ' ' . $lastName;
-            $email = strtolower($firstName . '.' . $lastName . rand(1, 999) . '@example.com');
+            $email = strtolower( rand(1, 96333599) . '@gmail.com');
 
             // Some flats might have multiple tenants (family/roommates)
             $numTenants = rand(1, 2); 
@@ -50,7 +50,7 @@ class TenantSeeder extends Seeder
                     
                     $firstName = $firstNames[array_rand($firstNames)];
                     $fullName = $firstName . ' ' . $lastName;
-                    $email = strtolower($firstName . '.' . $lastName . rand(1, 999) . '@example.com');
+                    $email = strtolower( rand(1, 99436349) . '@gmail.com');
                 }
 
                 $bdAddresses = [

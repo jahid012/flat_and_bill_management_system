@@ -209,7 +209,13 @@
         flatSelect.innerHTML = '<option value="">Select Flat</option>';
         
         if (buildingId) {
-            fetch(`/house-owner/api/buildings/${buildingId}/flats`)
+            fetch(`/house-owner/buildings/${buildingId}/flats`, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => response.json())
                 .then(data => {
                     data.forEach(flat => {
@@ -227,7 +233,13 @@
         const previousDueSection = document.getElementById('previousDueSection');
         
         if (flatId) {
-            fetch(`/house-owner/api/flats/${flatId}/previous-dues`)
+            fetch(`/house-owner/flats/${flatId}/previous-dues`, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => response.json())
                 .then(data => {
                     previousDue = data.total_due;

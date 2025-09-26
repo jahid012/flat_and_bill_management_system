@@ -62,5 +62,9 @@ Route::prefix('house-owner')->name('house_owner.')->group(function () {
         Route::post('/bills/{bill}/pay', [BillController::class, 'markAsPaid'])->name('bills.pay');
         
         Route::get('/reports/monthly', [BillController::class, 'monthlyReport'])->name('reports.monthly');
+        
+        // AJAX endpoints for bill creation
+        Route::get('/buildings/{building}/flats', [BillController::class, 'getBuildingFlats'])->name('buildings.flats');
+        Route::get('/flats/{flat}/previous-dues', [BillController::class, 'getFlatPreviousDues'])->name('flats.previous-dues');
     });
 });

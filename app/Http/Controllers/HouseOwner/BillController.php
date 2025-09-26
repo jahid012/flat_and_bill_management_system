@@ -310,4 +310,54 @@ class BillController extends Controller
 
         return view('house_owner.reports.monthly', compact('report'));
     }
+
+    /**
+     * Get flats for a specific building (AJAX endpoint)
+     */
+    public function getBuildingFlats(Building $building)
+    {
+        $flats = $building->flats()->with('currentTenant:id,name,flat_id')->get(['id', 'flat_number']);
+        
+        return response()->json($flats->map(function ($flat) {
+            return [
+                'id' => $flat->id,
+                'flat_number' => $flat->flat_number,
+                'tenant' => $flat->currentTenant ? [
+                    'id' => $flat->currentTenant->id,
+                    'name' => $flat->currentTenant->name
+                ] : null
+            ];
+        }));
+    }
+
+    /**
+     * Get previous dues for a specific flat (AJAX endpoint)
+     */
+    public function getFlatPreviousDues(Flat $flat)
+    {
+        // Calculate total unpaid amounts
+        $unpaidBills = $flat->bills()
+            ->whereIn('status', ['unpaid', 'partially_paid', 'overdue'])
+            ->get();
+
+        $totalDue = $unpaidBills->sum(function ($bill) {
+            return ($bill->amount + $bill->due_amount) - $bill->paid_amount;
+        });
+
+        return response()->json([
+            'total_due' => $totalDue,
+            'unpaid_bills_count' => $unpaidBills->count(),
+            'bills' => $unpaidBills->map(function ($bill) {
+                return [
+                    'id' => $bill->id,
+                    'bill_month' => $bill->bill_month,
+                    'category' => $bill->billCategory->name,
+                    'amount' => $bill->amount + $bill->due_amount,
+                    'paid_amount' => $bill->paid_amount,
+                    'remaining' => ($bill->amount + $bill->due_amount) - $bill->paid_amount,
+                    'status' => $bill->status
+                ];
+            })
+        ]);
+    }
 }
