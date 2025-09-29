@@ -6,12 +6,12 @@ https://flatbill.jahid-hasan.space
 ### Default Login Credentials
 
 **System Administrator:**
-- URL: `https://flatbill.jahid-hasan.space/admin/login`
+- URL: `http://flatbill.jahid-hasan.space/admin/login`
 - Email: `admin@gmail.com`
 - Password: `123456`
 
 **House Owner (Test Account):**
-- URL: `https://flatbill.jahid-hasan.space/house-owner/login`
+- URL: `http://flatbill.jahid-hasan.space/house-owner/login`
 - Email: `owner@gmail.com`
 - Password: `123456`
 
