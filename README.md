@@ -1,17 +1,17 @@
 # Multi-Tenant Property Bill Management System
 
 ### Live Hosting Link
-https://jahid-hasan.space/flat_and_bill
+https://flatbill.jahid-hasan.space
 
 ### Default Login Credentials
 
 **System Administrator:**
-- URL: `https://jahid-hasan.space/flat_and_bill/admin/login`
+- URL: `https://flatbill.jahid-hasan.space/admin/login`
 - Email: `admin@gmail.com`
 - Password: `123456`
 
 **House Owner (Test Account):**
-- URL: `https://jahid-hasan.space/flat_and_bill/house-owner/login`
+- URL: `https://flatbill.jahid-hasan.space/house-owner/login`
 - Email: `owner@gmail.com`
 - Password: `123456`
 
