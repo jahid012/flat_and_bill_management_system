@@ -1,5 +1,20 @@
 # Multi-Tenant Property Bill Management System
 
+### Live Hosting Link
+https://jahid-hasan.space/flat_and_bill
+
+### Default Login Credentials
+
+**System Administrator:**
+- URL: `https://jahid-hasan.space/flat_and_bill/admin/login`
+- Email: `admin@gmail.com`
+- Password: `123456`
+
+**House Owner (Test Account):**
+- URL: `https://jahid-hasan.space/flat_and_bill/house-owner/login`
+- Email: `owner@gmail.com`
+- Password: `123456`
+
 ### Click the Image to see the video.
 [![Demo Video](preview.png)](https://drive.google.com/file/d/1mI9yIEMRHBUkZHHMoky5wEdVKMAsA9LY/view?usp=sharing)
 
@@ -71,17 +86,7 @@ This system uses a **column-based multi-tenancy approach** instead of database-l
    php artisan queue:work
    ```
 
-### Default Login Credentials
 
-**System Administrator:**
-- URL: `http://127.0.0.1:8000/admin/login`
-- Email: `admin@gmail.com`
-- Password: `123456`
-
-**House Owner (Test Account):**
-- URL: `http://127.0.0.1:8000/house-owner/login`
-- Email: `owner@gmail.com`
-- Password: `123456`
 
 ## Technical Details
 
